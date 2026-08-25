@@ -1,0 +1,17 @@
+package dev.game2048.app.data.repository
+
+import dev.game2048.app.data.local.datastore.SettingsDataStore
+import dev.game2048.app.domain.model.GameSettings
+import javax.inject.Inject
+import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+
+@Singleton
+class SettingsRepository @Inject constructor(private val dataStore: SettingsDataStore) {
+    val settingsFlow: Flow<GameSettings> = dataStore.gameSettingsFlow
+
+    suspend fun getSettings(): GameSettings = dataStore.gameSettingsFlow.first()
+
+    suspend fun saveSettings(settings: GameSettings) = dataStore.saveSettings(settings)
+}
